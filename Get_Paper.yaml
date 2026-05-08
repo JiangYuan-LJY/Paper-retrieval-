@@ -1,0 +1,35 @@
+# 研究主题，用于大模型判断论文摘要与研究方向的相关性
+# 注意：topic 不直接参与 Scopus 检索
+topic: "Stability analysis"
+
+# Scopus 检索关键词，也用于关键词匹配度评分
+# 建议使用英文关键词
+keywords:
+  - "modular multilevel converter"
+  - "Oscillation suppression "
+
+# 关键词连接方式：AND 更严格，OR 更宽泛
+keyword_operator: "OR"
+
+# Scopus 最大返回数量
+max_results: 20
+
+# 检索年份
+year: 2026
+
+# 大模型评分提示词模板
+# 程序会自动追加当前论文的 Topic、用户关键词、Abstract 和 Author Keywords
+scoring_prompt: "Score this academic paper against the user's research need. Return only JSON with keys topic_relevance_score and keyword_match_score. topic_relevance_score must be a number from 0 to {topic_relevance_max_score}; compare Topic with Abstract. keyword_match_score must be a number from 0 to {keyword_match_max_score}; compare User keywords with Author Keywords. Use null only when the needed paper field is Not available."
+
+# 三项评分权重
+score_weights:
+  journal_quality: 45
+  topic_relevance: 35
+  keyword_match: 20
+
+# 期刊质量评分规则
+journal_quality:
+  q1_or_engineering_1: 45
+  q2_or_engineering_2: 40
+  q3_or_engineering_3: 30
+  other_known_rank: 25
